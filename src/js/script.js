@@ -25,6 +25,8 @@
     const bookContainer = document.querySelector(select.booksList);
 
     for (const book of data) {
+      book.rateBackground = updateRateBar(book.rating);
+      book.rateWidth = book.rating * 10;
       const generatedHtml = templates.bookTemplate(book);
       const generatedDOM = utils.createDOMFromHTML(generatedHtml);
       
@@ -51,7 +53,24 @@
         bookElement.classList.remove(classNames.hidden);
       }
     }
+  }
 
+  function updateRateBar(rate) {
+    let col1, col2;
+    if (rate < 6) {
+      col1 = '#fefcea';
+      col2 = '#f1da36';
+    } else if (rate > 6 && rate <= 8) {
+      col1 = '#b4df5b';
+      col2 = '#b4df5b';
+    } else if (rate > 8 && rate <= 9) {
+      col1 = '#299a0b';
+      col2 = '#299a0b';
+    } else {
+      col1 = '#ff0084';
+      col2 = '#ff0084';
+    }
+    return `linear-gradient(to bottom, ${ col1 } 0%, ${ col2 } 100%);`;
   }
 
   function initActions() {
